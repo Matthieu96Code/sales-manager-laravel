@@ -15,7 +15,7 @@
     <body>
         <style>
             body {
-                background-color: aqua;
+                background-color: beige;
             }
         </style>
         <nav class="navbar navbar-light bg-light fixed-top">
