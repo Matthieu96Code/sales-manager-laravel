@@ -97,7 +97,7 @@
     </div>
 
     <div>
-        {{ $users->links('pagination::bootstrap-4') }}
+        {{-- {{ $users->links('pagination::bootstrap-4') }} --}}
         {{ $users->links() }}
     </div>
 </div>
