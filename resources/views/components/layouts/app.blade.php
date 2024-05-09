@@ -14,6 +14,7 @@
     </head>
     <body>
         @include('styles.main')
+        @include('styles.layout')
         
         <div class="main-layout">
             @include('components.sidebar')
