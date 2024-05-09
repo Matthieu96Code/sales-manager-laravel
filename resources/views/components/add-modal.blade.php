@@ -10,16 +10,17 @@
     x-transition.duration.300ms
     >
 
-    <div x-on:click="show = false" class="fixed inset-0 bg-gray-300 opacity-40"></div>
-    <div class="bg-white rounded m-auto fixed inset-0 max-w-2xl" style="max-height:500px">
-        <div>
-            <button x-data x-on:click="$dispatch('close-modal')">X</button>
+    <div x-on:click="show = false" class="main-modal modal-container add-modal"></div>
+    <div  class="modal-content">
+        <div class="modal-header">
+            <button x-data x-on:click="$dispatch('close-modal')" class="main-btn close-btn">X</button>
         </div>
         @if (isset($title))
-            <div class="py-3 flex items-center justify-center">{{ $title }}</div>
+        {{-- <h1 class="main-title">{{ $title }}</h1> --}}
         @endif
-        <div>
+        <div class="modal-body">
             {{ $body}}
         </div>
     </div>
+
 </div>

@@ -25,9 +25,14 @@ class ProductList extends Component
 
         Product::create($validated);
 
+        // $product = Product::create($validated);
+
         $this->reset('name', 'unit', 'quantity', 'price', 'detail');
 
         session()->flash('success', 'product created successfully');
+
+        // $this->dispatch('product-created', $product);
+        $this->dispatch('close-modal');
     }
 
 
