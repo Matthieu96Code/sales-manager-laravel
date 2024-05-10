@@ -1,6 +1,8 @@
 <?php
 
+use App\Livewire\CustomerTable;
 use App\Livewire\ProductList;
+use App\Livewire\StoreItems;
 use App\Livewire\UserTable;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +22,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', ProductList::class)->name('products');
-Route::get('/customers', UserTable::class)->name('customers');
+// Route::get('/products', ProductList::class)->name('products');
+Route::get('/stores', StoreItems::class)->name('stores');
+Route::get('/customers', CustomerTable::class)->name('customers');
+Route::get('/seller', UserTable::class)->name('seller');
+// Route::get('/sales', UserTable::class)->name('sales');

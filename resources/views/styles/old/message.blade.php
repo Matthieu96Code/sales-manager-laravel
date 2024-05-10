@@ -18,7 +18,7 @@
     /* Project */
 
     .show-project-section {
-        background-color: var(--custom-background-light);
+        background-color: var(--sections-background-color);
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -61,7 +61,7 @@
 
     .message-section .message-text-item {
         width: fit-content;
-        background-color: var(--primary-background-color);
+        background-color: var(--sidebar-background-color);
         padding: 9px;
         border-radius: 6px;
         color: var(--custom-text-light);
@@ -121,7 +121,7 @@
     }
 
     input::file-selector-button {
-        background-color: var(--primary-background-color);
+        background-color: var(--sidebar-background-color);
         color: var(--custom-text-light);
         padding: 6px 12px;
         border-radius: 6px;

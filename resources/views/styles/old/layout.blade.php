@@ -9,7 +9,7 @@
         display: flex;
         flex-direction: column;
         width: 21%;
-        background-color: var(--primary-background-color);
+        background-color: var(--sidebar-background-color);
         color : white;
         padding: 0 30px;
         min-height: 100vh;
@@ -71,7 +71,7 @@
     .main-content {
         width: 79%;
         margin-left: 21%;
-        background-color: var(--secondary-background-color);
+        background-color: var(--body-background-color);
         padding: 0 5%;
         min-height: 100vh;
     }
@@ -80,7 +80,7 @@
         margin: 30px 0;
         display: flex;
         justify-content: space-between;
-        background-color: var(--primary-background-color);
+        background-color: var(--sidebar-background-color);
         border-radius: 9px;
         padding: 9px 8%;
     }
@@ -110,7 +110,7 @@
         }
         
         .sidebar .menu-list {
-            border-top: 1px solid var(--secondary-background-color);
+            border-top: 1px solid var(--body-background-color);
             flex-direction: row;
             overflow-x: scroll;
             scroll-behavior:smooth;

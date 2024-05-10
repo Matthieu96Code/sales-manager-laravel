@@ -8,7 +8,7 @@
     }
     
     .sidebar {
-        background-color: var(--primary-background-color);
+        background-color: var(--sidebar-background-color);
         color: white;
         position: fixed;
         width: 21%;
@@ -83,7 +83,7 @@
         /* margin: 30px 0; */
         display: flex;
         justify-content: space-between;
-        background-color: var(--primary-background-color);
+        background-color: var(--sidebar-background-color);
         border-radius: 9px;
         padding: 9px 8%;
     }
@@ -119,7 +119,7 @@
         }
 
         .sidebar .menu-list {
-            border-top: 1px solid var(--secondary-background-color);
+            border-top: 1px solid var(--body-background-color);
             flex-direction: row;
             overflow-x: scroll;
             scroll-behavior:smooth;

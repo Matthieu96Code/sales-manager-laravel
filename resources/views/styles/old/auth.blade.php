@@ -7,7 +7,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: var(--secondary-background-color);
+        background-color: var(--body-background-color);
     }
 
     .auth-section .auth-container {
