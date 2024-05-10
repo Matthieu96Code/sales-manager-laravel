@@ -64,3 +64,28 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+'$table->string('status');'
+'$table->string('payment_method');'
+'$table->string('payment_status');'
+'$table->string('shipping_address');'
+'$table->string('shipping_method');'
+'$table->string('shipping_status');'
+'$table->string('shipping_receipt');'
+'$table->string('shipping_date');'
+'$table->string('shipping_time');'
+'$table->string('shipping_note');'
+'$table->string('shipping_cost');'
+'$table->string('discount');'
+'$table->string('tax');'
+'$table->string('grand_total');'
+'$table->string('payment_receipt');'
+'$table->string('payment_date');'
+'$table->string('payment_time');'
+'$table->string('payment_note');'
+'$table->string('payment_refund');'
+
+php artisan migrate --path=database\migrations\2014_10_12_000000_create_users_table.php
+php artisan migrate --path=database\migrations\2024_05_05_151332_create_products_table.php
+php artisan migrate --path=database\migrations\2024_05_09_200827_create_customers_table.php
+php artisan migrate --path=database\migrations\2024_05_10_114259_create_sales_table.php

@@ -25,11 +25,27 @@
             </a>
         </li>
         <li class="menu-list-item">
+            <a wire:navigate class="menu-list-link" href="{{ route('stores') }}">
+                <span class="main-icon menu-icon">
+                    <x-iconsax-lin-card-add />
+                </span>
+                <p>Stores</p>
+            </a>
+        </li>
+        <li class="menu-list-item">
             <a wire:navigate class="menu-list-link" href="{{ route('customers') }}">
                 <span class="main-icon menu-icon">
                     <x-iconsax-lin-document-text-1 />
                 </span>
                 <p>customers</p>
+            </a>
+        </li>
+        <li class="menu-list-item">
+            <a wire:navigate class="menu-list-link" href="{{ route('seller') }}">
+                <span class="main-icon menu-icon">
+                    <x-iconsax-lin-document-text-1 />
+                </span>
+                <p>Seller</p>
             </a>
         </li>
     </ul>
