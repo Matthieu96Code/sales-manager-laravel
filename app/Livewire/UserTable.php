@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,6 +30,7 @@ class UserTable extends Component
 
     public $name = '';
     public $password = '';
+    public $password_confirmation = '';
     public $role = '';
 
     public function updatedSearch (){
@@ -46,16 +48,26 @@ class UserTable extends Component
     public function create() {
         
         $validated = $this->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|max:40|unique:users,name',
             'password' => 'required',
+            // 'password_confirmation' => 'required|confirmed',
             'role' => 'required',
         ]);
 
-        User::create($validated);
+        User::create([
+            'name' => $validated['name'],
+            'role' => $validated['role'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-        $this->reset('name', 'password', 'role');
+        // $user = User::create($validated);
+
+        $this->reset('name', 'password', 'password_confirmation', 'role');
 
         session()->flash('success', 'product created successfully');
+
+        // $this->dispatch('user-created', $user);
+        $this->dispatch('close-modal');
     }
 
     public function setSortBy($sortByField){

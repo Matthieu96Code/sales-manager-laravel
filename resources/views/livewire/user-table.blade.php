@@ -1,20 +1,26 @@
 <div>
     <x-add-modal name="add-user" title="Add user">
         <x-slot:body>
-            <form wire:submit="create" action="">
-                <div>
-                    <label for="">username</label>
-                    <input wire:model="name" type="text" placeholder="username">
+            <h1 class="main-title">Add a new user</h1>
+            <form class="main-form" wire:submit="create" action="">
+                <div class="main-form-group">
+                    <label class="main-label" for="">username</label>
+                    <input class="main-input" wire:model="name" type="text" placeholder="username">
                 </div>
                 
-                <div>
-                    <label for="">password</label>
-                    <input wire:model="password" type="password" placeholder="password">
+                <div class="main-form-group">
+                    <label class="main-label" for="">password</label>
+                    <input class="main-input" wire:model="password" type="password" placeholder="password">
                 </div>
                 
-                <div>
-                    <label for="">role</label>
-                    <select wire:model="role">
+                <div class="main-form-group">
+                    <label class="main-label" for="">confirm password</label>
+                    <input class="main-input" wire:model="password_confirmation" type="password" placeholder="confirm password">
+                </div>
+                
+                <div class="main-form-group">
+                    <label class="main-label" for="">role</label>
+                    <select class="main-input" wire:model="role">
                         {{-- <option value="0">Client</option> --}}
                         <option value="">Select role</option>
                         <option value="0">Client</option>
@@ -22,34 +28,34 @@
                     </select>
                 </div>
         
-                <div>
-                    <button>Add user</button>
+                <div class="main-form-group">
+                    <button class="main-btn">Add user</button>
                 </div>
             </form>
         </x-slot>
     </x-add-modal>
 
-    <button class="btn btn-danger" x-data x-on:click="$dispatch('open-modal', {name : 'add-user' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add user</button>
+    <button class="main-btn add-btn add-user-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-user' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add user</button>
 
-    <h1>User Table</h1>
+    <h1 class="main-title">Sellers List</h1>
 
-    <div>
-        <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search">
-    </div>
+    <div class="main-table-section">
+        <div>
+            <input class="main-input" wire:model.live.debounce.300ms="search" type="text" placeholder="Search">
+        </div>
 
-    <div>
-        <label for="">User Type</label>
-        <select wire:model.live="roleSearch">
-            <option value="">All</option>
-            <option value="0">User</option>
-            <option value="1">Admin</option>
-        </select>
-    </div>
+        <div class="">
+            <label class="main-label" for="">User Type</label>
+            <select class="main-input" wire:model.live="roleSearch">
+                <option value="">All</option>
+                <option value="0">User</option>
+                <option value="1">Admin</option>
+            </select>
+        </div>
 
-    <div>
-        <table>
-            <thead>
-                <tr>
+        <table class="main-table user-table">
+            <thead class="main-thead user-thead">
+                <tr class="main-tr user-tr">
                     @include('livewire.includes.table-sortable-th', [
                         'type' => 'name',
                         'displayName' => 'Name'
@@ -71,33 +77,33 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="main-tbody user-tbody">
                 @foreach ($users as $user)
-                    <tr wire:key="{{ $user->id }}">
-                        <th> {{ $user->name }} </th>
-                        <th> {{ $user->role }} </th>
-                        <th> {{ $user->created_at }} </th>
-                        <th> {{ $user->updated_at }} </th>
-                        <th>
-                            <button onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$user->id}})">X</button>
+                    <tr class="main-tr user-tr" wire:key="{{ $user->id }}">
+                        <th class="main-td user-td"> {{ $user->name }} </th>
+                        <th class="main-td user-td"> {{ $user->role }} </th>
+                        <th class="main-td user-td"> {{ $user->created_at }} </th>
+                        <th class="main-td user-td"> {{ $user->updated_at }} </th>
+                        <th class="main-td user-td">
+                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$user->id}})">X</button>
                         </th>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
     
-    <div>
-        <label for="">Per page</label>
-        <select wire:model.live="perPage">
-            <option value="2">2</option>
-            <option value="5">5</option>
-            <option value="7">7</option>
-        </select>
-    </div>
+        <div>
+            <label class="main-label" for="">Per page</label>
+            <select class="main-input" wire:model.live="perPage">
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+            </select>
+        </div>
 
-    <div>
-        {{-- {{ $users->links('pagination::bootstrap-4') }} --}}
-        {{ $users->links() }}
+        <div>
+            {{-- {{ $users->links('pagination::bootstrap-4') }} --}}
+            {{ $users->links() }}
+        </div>
     </div>
 </div>
