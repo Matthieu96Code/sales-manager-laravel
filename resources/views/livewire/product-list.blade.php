@@ -1,8 +1,7 @@
 <div>
 
     <x-add-modal name="add-product" title="Add Product">
-        {{-- @slot('body')
-        @endslot --}}
+
         <x-slot:body>
             <h1 class="main-title">Add a new product</h1>
             <form wire:submit="create" class="main-form" action="">
@@ -36,12 +35,71 @@
         </x-slot>
     </x-add-modal>
 
-    <button x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add product</button>
+    <button class="main-btn add-btn add-product-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add product</button>
 
-    <h1>Product List</h1>
+    <h1 class="main-title">Products List</h1>
 
-    @foreach ($products as $product)
-        <p>{{ $product->name }}</p>
-    @endforeach
+    <div class="main-table-section">
+        <div>
+            <input class="main-input" wire:model.live.debounce.300ms="search" type="text" placeholder="Search">
+        </div>
+
+        <table class="main-table product-table">
+            <thead class="main-thead product-thead">
+                <tr class="main-tr product-tr">
+                    @include('livewire.includes.table-sortable-th', [
+                        'type' => 'name',
+                        'displayName' => 'Name'
+                    ])
+                    @include('livewire.includes.table-sortable-th', [
+                        'type' => 'unit',
+                        'displayName' => 'Unit'
+                    ])
+                    @include('livewire.includes.table-sortable-th', [
+                        'type' => 'price',
+                        'displayName' => 'Price in USD'
+                    ])
+                    @include('livewire.includes.table-sortable-th', [
+                        'type' => 'created_at',
+                        'displayName' => 'Joined'
+                    ])
+                    @include('livewire.includes.table-sortable-th', [
+                        'type' => 'updated_at',
+                        'displayName' => 'Edited'
+                    ])
+                    <th class="main-th product-th">
+                        <span>Actions</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="main-tbody product-tbody">
+                @foreach ($products as $product)
+                    <tr class="main-tr product-tr" wire:key="{{ $product->id }}">
+                        <td class="main-td product-td"> {{ $product->name }} </td>
+                        <td class="main-td product-td"> {{ $product->unit }} </td>
+                        <td class="main-td product-td"> {{ $product->price }} </td>
+                        <td class="main-td product-td"> {{ $product->created_at }} </td>
+                        <td class="main-td product-td"> {{ $product->updated_at }} </td>
+                        <td class="main-td product-td">
+                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">X</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    
+        <div>
+            <label class="main-label" for="">Per page</label>
+            <select class="main-input" wire:model.live="perPage">
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+
+        <div>
+            {{ $products->links() }}
+        </div>
+    </div>
     
 </div>
