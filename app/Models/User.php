@@ -47,4 +47,12 @@ class User extends Authenticatable
     public function scopeSearch($query, $value){
         $query->where('name', 'like', "%{$value}%")->orwhere('created_at', 'like', "%{$value}%");
     }
+
+    public function sales(){
+        return $this->hasMany(sale::class);
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }

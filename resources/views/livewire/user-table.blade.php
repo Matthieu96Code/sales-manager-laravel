@@ -39,6 +39,10 @@
 
     <h1 class="main-title">Sellers List</h1>
 
+    @if ($users->isEmpty())
+        <p class="main-text empty-list-text red-text">Your user list is empty</p>
+    @else
+
     <div class="main-table-section">
         <div>
             <input class="main-input" wire:model.live.debounce.300ms="search" type="text" placeholder="Search">
@@ -85,7 +89,11 @@
                         <th class="main-td user-td"> {{ $user->created_at }} </th>
                         <th class="main-td user-td"> {{ $user->updated_at }} </th>
                         <th class="main-td user-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$user->id}})">X</button>
+                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$user->id}})">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-lin-trash />
+                                </span>
+                            </button>
                         </th>
                     </tr>
                 @endforeach
@@ -106,4 +114,7 @@
             {{ $users->links() }}
         </div>
     </div>
+
+    @endif
+
 </div>
