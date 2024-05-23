@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,6 +32,13 @@ class CustomerTable extends Component
     public $phone_number = '';
     public $location = '';
 
+    public $editingCustomerId;
+    
+    public $editingCustomerName;
+    public $editingCustomerEmail;
+    public $editingCustomerPhone_number;
+    public $editingCustomerLocation;
+
     public function updatedSearch (){
         $this->resetPage();
     }
@@ -52,14 +60,17 @@ class CustomerTable extends Component
             'location' => 'required',
         ]);
 
-        Customer::create($validated);
+        Customer::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone_number' => $validated['phone_number'],
+            'location' => $validated['location'],
+            'user_id' => Auth::user()->id
+        ]);
 
         // $customer = Customer::create($validated);
-
         $this->reset('name', 'email', 'phone_number', 'location');
-
-        session()->flash('success', 'product created successfully');
-        
+        session()->flash('success', 'customer created successfully');
         // $this->dispatch('customer-created', $customer);
         $this->dispatch('close-modal');
     }
@@ -73,6 +84,43 @@ class CustomerTable extends Component
 
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
+    }
+
+    
+    public function edit($customerId){
+        $this->editingCustomerId = $customerId;
+        $editingCustomer = Customer::find($customerId);
+
+        $this->editingCustomerName = $editingCustomer->name;
+        $this->editingCustomerEmail = $editingCustomer->email;
+        $this->editingCustomerPhone_number = $editingCustomer->phone_number;
+        $this->editingCustomerLocation = $editingCustomer->location;
+
+    }
+
+    public function cancelEdit() {
+        $this->reset(
+            "editingCustomerId",
+            "editingCustomerName",
+            "editingCustomerEmail",
+            "editingCustomerPhone_number",
+            "editingCustomerLocation"
+        );
+
+        $this->dispatch('close-modal');
+    }
+
+    public function update() {
+        Customer::find($this->editingCustomerId)->update(
+            [
+                'name' => $this->editingCustomerName,
+                'email' => $this->editingCustomerEmail,
+                'phone_number' => $this->editingCustomerPhone_number,
+                'location' => $this->editingCustomerLocation,
+            ]
+        );
+
+        $this->cancelEdit();
     }
 
     public function render()

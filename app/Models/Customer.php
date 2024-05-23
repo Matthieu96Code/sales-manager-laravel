@@ -14,6 +14,7 @@ class Customer extends Model
         'email',
         'phone_number',
         'location',
+        'user_id',
     ];
 
     public function scopeSearch($query, $value){
@@ -21,5 +22,9 @@ class Customer extends Model
         ->orwhere('email', 'like', "%{$value}%")
         ->orwhere('phone_number', 'like', "%{$value}%")
         ->orwhere('location', 'like', "%{$value}%");
+    }
+
+    public function sales(){
+        return $this->hasMany(sale::class);
     }
 }

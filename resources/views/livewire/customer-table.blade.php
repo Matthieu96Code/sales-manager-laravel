@@ -24,9 +24,47 @@
                 </div>
         
                 <div class="main-form-group">
-                    <button class="main-btn">Add Customer</button>
+                    <button class="main-btn">Saved</button>
                 </div>
             </form>
+        </x-slot>
+    </x-add-modal>
+
+    {{-- update customer modal --}}
+
+    <x-add-modal name="edit-customer" title="Edit Customer">
+
+        <x-slot:body>
+            <h1 class="main-title">Edit customer</h1>
+            @if ($editingCustomerId)
+            
+            <form class="main-form" wire:submit="update" action="">
+                <div class="main-form-group">
+                    <label class="main-label" for="">Name</label>
+                    <input class="main-input" wire:model="editingCustomerName" type="text" placeholder="Name">
+                </div>
+                
+                <div class="main-form-group">
+                    <label class="main-label" for="">Email</label>
+                    <input class="main-input" wire:model="editingCustomerEmail" type="email" placeholder="Email">
+                </div>
+                
+                <div class="main-form-group">
+                    <label class="main-label" for="">Phone number</label>
+                    <input class="main-input" wire:model="editingCustomerPhone_number" type="text" placeholder="Phone number">
+                </div>
+                
+                <div class="main-form-group">
+                    <label class="main-label" for="">Location</label>
+                    <input class="main-input" wire:model="editingCustomerLocation" type="text" placeholder="Location">
+                </div>
+        
+                <div class="main-form-group">
+                    <button class="main-btn">Update</button>
+                </div>
+            </form>
+            @endif
+
         </x-slot>
     </x-add-modal>
 
@@ -34,6 +72,10 @@
 
     <h1 class="main-title">Customers List</h1>
     
+    @if ($customers->isEmpty())
+        <p class="main-text empty-list-text red-text">customer list is empty</p>
+    @else
+
     <div class="main-table-section">
         <div>
             <input class="main-input" wire:model.live.debounce.300ms="search" type="text" placeholder="Search">
@@ -76,7 +118,16 @@
                         <td class="main-td customer-td"> {{ $customer->location }} </td>
                         <td class="main-td customer-td"> {{ $customer->created_at }} </td>
                         <td class="main-td customer-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $customer->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$customer->id}})">X</button>
+                            <sapn class="main-icon edit-icon"  wire:click="edit({{$customer->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-customer' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-edit-2 />
+                                </span>
+                            </sapn>
+                            <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $customer->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$customer->id}})">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-lin-trash />
+                                </span>
+                            </span>
                         </td>
                     </tr>
                 @endforeach
@@ -97,5 +148,7 @@
             {{ $customers->links() }}
         </div>
     </div>
+    
+    @endif
 
 </div>
