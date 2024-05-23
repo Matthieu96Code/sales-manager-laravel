@@ -193,14 +193,13 @@
     .delete-btn {
         background-color: red;
         border: 1px solid red;
-        padding: 6px 12px;
+        padding: 6px 6px;
     }
 
     .delete-btn:hover {
         background-color: white;
         color: red;
         border: 1px solid red;
-        padding: 6px 12px;
     }
 
     .add-btn {
@@ -256,11 +255,17 @@
         color: red;
     }
 
-    .add-icon {
+    .main-icon {
+        cursor: pointer;
+    }
+
+    .add-icon,
+    .show-icon {
         color: green;
     }
 
-    .add-icon:hover {
+    .add-icon:hover,
+    .show-icon:hover {
         color: white;
         background-color: green;
         border-radius: 6px;

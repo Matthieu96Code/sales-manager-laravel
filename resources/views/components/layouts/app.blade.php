@@ -15,19 +15,45 @@
     <body>
         @include('styles.main')
         @include('styles.layout')
+        @include('styles.auth')
         
-        <div class="main-layout">
-            @include('components.sidebar')
-    
-            <div class="main-section">
-                <nav class="navbar">
-                    <button x-data x-on:click="$dispatch('open-modal', {name : 'sidebar' })" class="px-3 py-1 bg-teal-500 text-white rounded">Sidebar</button>
-                    <button x-data x-on:click="$dispatch('close-modal', {name : 'sidebar' })">X</button>
-                </nav>
-                <div class="main-body">
+        @auth
+            <div class="main-layout">
+                
+                @livewire('side-bar')
+                <div class="main-section">
+                    <nav class="navbar">
+                        <a href="" class="main-icon menu-icon">
+                            <x-iconsax-lin-arrow-left />
+                        </a>
+                        <a href="" class="main-icon menu-icon">
+                            Sales
+                        </a>
+                    </nav>
+                    <div class="main-body">
+                        {{ $slot }}
+                    </div>
+                </div>
+            </div>
+        @endauth
+
+        @guest
+            <div class="auth-section">
+
+                <div class="auth-container">
+                    <div class="auth-layout">
+                        <div class="auth-presentation">
+                            <h2 class="auth-title main-title">e-correction</h2>
+                        
+                            <p class="auth-text main-text">Nous recréons vos idéologies</p>
+                        
+                        </div>
+                        <img src="{{ url('image/travail-equipe.png') }}" alt="">
+                    </div>
                     {{ $slot }}
                 </div>
             </div>
-        </div>
+        @endguest
+
     </body>
 </html>

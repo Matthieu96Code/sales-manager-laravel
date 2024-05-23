@@ -89,3 +89,4 @@ php artisan migrate --path=database\migrations\2014_10_12_000000_create_users_ta
 php artisan migrate --path=database\migrations\2024_05_05_151332_create_products_table.php
 php artisan migrate --path=database\migrations\2024_05_09_200827_create_customers_table.php
 php artisan migrate --path=database\migrations\2024_05_10_114259_create_sales_table.php
+php artisan migrate --path=database\migrations\2024_05_22_212946_create_supplies_table.php
