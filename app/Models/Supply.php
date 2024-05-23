@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sale extends Model
+class Supply extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'product_id',
-        'customer_id',
         'user_id',
         'quantity',
-        'taxes',
     ];
 
     public function scopeSearch($query, $value){
@@ -27,10 +25,6 @@ class sale extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
-    }
-
-    public function customer(){
-        return $this->belongsTo(Customer::class);
     }
 
     public function product(){
