@@ -35,9 +35,13 @@
         </x-slot>
     </x-add-modal>
 
-    <button class="main-btn add-btn add-product-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add product</button>
+    {{-- <button class="main-btn add-btn add-product-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add product</button> --}}
 
     <h1 class="main-title">Store items</h1>
+
+    @if ($products->isEmpty())
+        <p class="main-text empty-list-text red-text">Your store is empty</p>
+    @else
 
     <div class="main-table-section">
         <div>
@@ -81,7 +85,11 @@
                         <td class="main-td product-td"> {{ $product->created_at }} </td>
                         <td class="main-td product-td"> {{ $product->updated_at }} </td>
                         <td class="main-td product-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">X</button>
+                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-lin-trash />
+                                </span>
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -101,5 +109,7 @@
             {{ $products->links() }}
         </div>
     </div>
+
+    @endif
     
 </div>

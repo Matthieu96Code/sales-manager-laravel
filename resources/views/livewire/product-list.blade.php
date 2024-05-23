@@ -16,10 +16,6 @@
                 </div>
                 
                 <div class="main-form-group">
-                    <label class="main-label" for="">product quantity</label>
-                    <input wire:model="quantity" class="main-input" type="number" placeholder="product quantity">
-                </div>
-                <div class="main-form-group">
                     <label class="main-label" for="">price in usd</label>
                     <input wire:model="price" class="main-input" type="number" placeholder="price">
                 </div>
@@ -34,10 +30,62 @@
             </form>
         </x-slot>
     </x-add-modal>
+    
+    {{-- show product modal --}}
 
-    <button class="main-btn add-btn add-product-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add product</button>
+    <x-add-modal name="show-product" title="Show Product">
+        <x-slot:body>
+            @if ($editingProductId)
+                <p>{{$editingProductName}}</p>
+            @endif
+        </x-sloty>
+    </x-add-modal>
+
+    {{-- update product modal --}}
+
+    <x-add-modal name="edit-product" title="Edit Product">
+
+        <x-slot:body>
+            <h1 class="main-title">Edit product</h1>
+            @if ($editingProductId)
+                
+            <form wire:submit="update" class="main-form" action="">
+                <div class="main-form-group">
+                    <label class="main-label" for="">product name</label>
+                    <input wire:model="editingProductName" class="main-input" type="text" placeholder="product name">
+                </div>
+                
+                <div class="main-form-group">
+                    <label class="main-label" for="">product unit</label>
+                    <input wire:model="editingProductUnit" class="main-input" type="text" placeholder="product unit">
+                </div>
+                
+                <div class="main-form-group">
+                    <label class="main-label" for="">price in usd</label>
+                    <input wire:model="editingProductPrice" class="main-input" type="number" placeholder="price">
+                </div>
+                <div class="main-form-group">
+                    <label class="main-label" for="">detail</label>
+                    <textarea wire:model="editingProductDetail" class="main-input" cols="20" rows="10"></textarea>
+                </div>
+
+                <div class="main-form-group">
+                    <button class="main-btn">Update</button>
+                    {{-- <button wire:click="cancelEdit" class="main-btn">Update</button> --}}
+                </div>
+            </form>
+            @endif
+
+        </x-slot>
+    </x-add-modal>
+
+    <button class="main-btn add-btn add-product-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })">Add product</button>
 
     <h1 class="main-title">Products List</h1>
+
+    @if ($products->isEmpty())
+        <p class="main-text empty-list-text red-text">product list is empty</p>
+    @else
 
     <div class="main-table-section">
         <div>
@@ -57,11 +105,11 @@
                     ])
                     @include('livewire.includes.table-sortable-th', [
                         'type' => 'price',
-                        'displayName' => 'Price in USD'
+                        'displayName' => 'Price'
                     ])
                     @include('livewire.includes.table-sortable-th', [
                         'type' => 'created_at',
-                        'displayName' => 'Joined'
+                        'displayName' => 'Created'
                     ])
                     @include('livewire.includes.table-sortable-th', [
                         'type' => 'updated_at',
@@ -77,17 +125,31 @@
                     <tr class="main-tr product-tr" wire:key="{{ $product->id }}">
                         <td class="main-td product-td"> {{ $product->name }} </td>
                         <td class="main-td product-td"> {{ $product->unit }} </td>
-                        <td class="main-td product-td"> {{ $product->price }} </td>
+                        <td class="main-td product-td"> {{ $product->price }} $</td>
                         <td class="main-td product-td"> {{ $product->created_at }} </td>
                         <td class="main-td product-td"> {{ $product->updated_at }} </td>
                         <td class="main-td product-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">X</button>
+                            <sapn class="main-icon show-icon"  wire:click="edit({{$product->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-product' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-eye />
+                                </span>
+                            </sapn>
+                            <sapn class="main-icon edit-icon"  wire:click="edit({{$product->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-product' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-edit-2 />
+                                </span>
+                            </sapn>
+                            <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-lin-trash />
+                                </span>
+                            </span>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    
+
         <div>
             <label class="main-label" for="">Per page</label>
             <select class="main-input" wire:model.live="perPage">
@@ -101,5 +163,7 @@
             {{ $products->links() }}
         </div>
     </div>
+
+    @endif
     
 </div>

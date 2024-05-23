@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('unit');
-            $table->integer('quantity');
-            $table->bigInteger('price');
+            $table->integer('quantity')->default(0);
+            $table->bigInteger('price')->default(0);
             $table->text('detail')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

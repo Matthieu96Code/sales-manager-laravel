@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,10 +30,16 @@ class ProductList extends Component
 
     public $name = '';
     public $unit = '';
-    public $quantity = '';
     public $price = '';
     public $detail = '';
+
+    public $editingProductId;
     
+    public $editingProductName;
+    public $editingProductUnit;
+    public $editingProductPrice;
+    public $editingProductDetail;
+
     public function updatedSearch (){
         $this->resetPage();
     }
@@ -45,16 +52,19 @@ class ProductList extends Component
         $validated = $this->validate([
             'name' => 'required',
             'unit' => 'required',
-            'quantity' => 'required',
             'price' => 'required',
             'detail' => 'nullable',
         ]);
 
-        Product::create($validated);
+        $product = Product::create([
+            'name' => $validated['name'],
+            'unit' => $validated['unit'],
+            'price' => $validated['price'],
+            'detail' => $validated['detail'],
+            'user_id' => Auth::user()->id
+        ]);
 
-        // $product = Product::create($validated);
-
-        $this->reset('name', 'unit', 'quantity', 'price', 'detail');
+        $this->reset('name', 'unit', 'price', 'detail');
 
         session()->flash('success', 'product created successfully');
 
@@ -75,6 +85,42 @@ class ProductList extends Component
 
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
+    }
+
+    public function edit($productId){
+        $this->editingProductId = $productId;
+        $editingProduct = Product::find($productId);
+
+        $this->editingProductName = $editingProduct->name;
+        $this->editingProductUnit = $editingProduct->unit;
+        $this->editingProductPrice = $editingProduct->price;
+        $this->editingProductDetail = $editingProduct->detail;
+
+    }
+
+    public function cancelEdit() {
+        $this->reset(
+            "editingProductId",
+            "editingProductName",
+            "editingProductUnit",
+            "editingProductPrice",
+            "editingProductDetail"
+        );
+
+        $this->dispatch('close-modal');
+    }
+
+    public function update() {
+        Product::find($this->editingProductId)->update(
+            [
+                'name' => $this->editingProductName,
+                'unit' => $this->editingProductUnit,
+                'price' => $this->editingProductPrice,
+                'detail' => $this->editingProductDetail,
+            ]
+        );
+
+        $this->cancelEdit();
     }
 
     public function render()

@@ -15,6 +15,7 @@ class Product extends Model
         'quantity',
         'price',
         'detail',
+        'user_id',
     ];
 
     public function scopeSearch($query, $value){
@@ -23,5 +24,13 @@ class Product extends Model
         ->orwhere('quantity', 'like', "%{$value}%")
         ->orwhere('price', 'like', "%{$value}%")
         ->orwhere('detail', 'like', "%{$value}%");
+    }
+    
+    public function sales(){
+        return $this->hasMany(sale::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
