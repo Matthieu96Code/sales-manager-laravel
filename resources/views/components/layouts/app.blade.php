@@ -43,9 +43,9 @@
                 <div class="auth-container">
                     <div class="auth-layout">
                         <div class="auth-presentation">
-                            <h2 class="auth-title main-title">e-correction</h2>
+                            <h2 class="auth-title main-title">Sales record</h2>
                         
-                            <p class="auth-text main-text">Nous recréons vos idéologies</p>
+                            <p class="auth-text main-text">Keep a track on you sales history</p>
                         
                         </div>
                         <img src="{{ url('image/travail-equipe.png') }}" alt="">
