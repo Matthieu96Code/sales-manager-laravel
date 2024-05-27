@@ -56,7 +56,7 @@ class ProductList extends Component
             'detail' => 'nullable',
         ]);
 
-        $product = Product::create([
+        Product::create([
             'name' => $validated['name'],
             'unit' => $validated['unit'],
             'price' => $validated['price'],
@@ -65,9 +65,7 @@ class ProductList extends Component
         ]);
 
         $this->reset('name', 'unit', 'price', 'detail');
-
         session()->flash('success', 'product created successfully');
-
         // $this->dispatch('product-created', $product);
         $this->dispatch('close-modal');
     }

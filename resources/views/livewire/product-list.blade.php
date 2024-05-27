@@ -130,19 +130,13 @@
                         <td class="main-td product-td"> {{ $product->updated_at }} </td>
                         <td class="main-td product-td">
                             <sapn class="main-icon show-icon"  wire:click="edit({{$product->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-product' })">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-bro-eye />
-                                </span>
+                                <x-iconsax-bro-eye />
                             </sapn>
                             <sapn class="main-icon edit-icon"  wire:click="edit({{$product->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-product' })">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-bro-edit-2 />
-                                </span>
+                                <x-iconsax-bro-edit-2 />
                             </sapn>
                             <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-lin-trash />
-                                </span>
+                                <x-iconsax-lin-trash />
                             </span>
                         </td>
                     </tr>
