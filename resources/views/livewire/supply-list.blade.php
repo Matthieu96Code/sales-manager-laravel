@@ -34,7 +34,7 @@
     <x-add-modal name="show-supply" title="Show Supply">
         <x-slot:body>
             @if ($editingSupplyId)
-                <p>{{$editingSupplyProduct}}</p>
+                <p>{{$editingSupplyProductId}}</p>
             @endif
         </x-sloty>
     </x-add-modal>
@@ -61,7 +61,7 @@
                 
                 <div class="main-form-group">
                     <label class="main-label" for="">supply quantity</label>
-                    <input wire:model="editingSupplyquantity" class="main-input" type="text" placeholder="supply quantity">
+                    <input wire:model="editingSupplyQuantity" class="main-input" type="text" placeholder="supply quantity">
                 </div>
 
                 <div class="main-form-group">

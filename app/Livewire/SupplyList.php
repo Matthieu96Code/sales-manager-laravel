@@ -35,7 +35,7 @@ class SupplyList extends Component
     public $editingSupplyId;
     
     public $editingSupplyProductId;
-    public $editingSupplyquantity;
+    public $editingSupplyQuantity;
     
     public function updatedSearch (){
         $this->resetPage();
@@ -87,10 +87,10 @@ class SupplyList extends Component
     
     public function edit($supplyId){
         $this->editingSupplyId = $supplyId;
-        $editingSupply = Product::find($supplyId);
+        $editingSupply = Supply::find($supplyId);
 
         $this->editingSupplyProductId = $editingSupply->product_id;
-        $this->editingSupplyquantity = $editingSupply->quantity;
+        $this->editingSupplyQuantity = $editingSupply->quantity;
 
     }
 
