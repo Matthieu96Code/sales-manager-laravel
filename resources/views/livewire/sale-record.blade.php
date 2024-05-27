@@ -45,6 +45,63 @@
         </x-slot>
     </x-add-modal>
 
+    {{-- show sale modal --}}
+
+    <x-add-modal name="show-sale" title="Show transation">
+        <x-slot:body>
+            @if ($editingSaleId)
+                <p>{{$editingSaleId}}</p>
+            @endif
+        </x-slot>
+    </x-add-modal>
+   
+    {{-- update sale modal --}}
+
+    <x-add-modal name="edit-sale" title="Edit transation">
+
+        <x-slot:body>
+            <h1 class="main-title">Edit transaction</h1>
+            <form wire:submit="update" class="main-form" action="">
+
+                <div class="main-form-group">
+                    <label class="main-label" for="">Customer</label>
+                    <select class="main-input" wire:model="editingSaleCustomerId">
+                        {{-- <option value="0">Client</option> --}}
+                        <option value="">Select customer</option>
+                        @foreach ($customers as $customer)
+                            <option value="{{$customer->id}}">{{$customer->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="main-form-group">
+                    <label class="main-label" for="">Product</label>
+                    <select class="main-input" wire:model="editingSaleProductId">
+                        {{-- <option value="0">Client</option> --}}
+                        <option value="">Select product</option>
+                        @foreach ($products as $product)
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            
+                <div class="main-form-group">
+                    <label class="main-label" for="">Quantity</label>
+                    <input wire:model="editingSaleQuantity" class="main-input" type="number" placeholder="product quantity">
+                </div>
+            
+                <div class="main-form-group">
+                    <label class="main-label" for="">Taxes</label>
+                    <input wire:model="editingSaleTaxes" class="main-input" type="text" placeholder="taxes">
+                </div>
+
+                <div class="main-form-group">
+                    <button class="main-btn">update</button>
+                </div>
+            </form>
+        </x-slot>
+    </x-add-modal>
+
     <button class="main-btn add-btn add-sale-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-sale' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add sale</button>
 
     <h1 class="main-title">Sales List</h1>
@@ -95,11 +152,21 @@
                         <td class="main-td sale-td"> {{ $sale->quantity }} </td>
                         <td class="main-td sale-td"> {{ $sale->created_at }} </td>
                         <td class="main-td sale-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $sale->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$sale->id}})">
+                            <sapn class="main-icon show-icon"  wire:click="edit({{$sale->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-sale' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-eye />
+                                </span>
+                            </sapn>
+                            <sapn class="main-icon edit-icon"  wire:click="edit({{$sale->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-sale' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-edit-2 />
+                                </span>
+                            </sapn>
+                            <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $sale->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$sale->id}})">
                                 <span class="main-icon table-icon">
                                     <x-iconsax-lin-trash />
                                 </span>
-                            </button>
+                            </span>
                         </td>
                     </tr>
                 @endforeach

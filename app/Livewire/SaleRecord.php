@@ -33,6 +33,13 @@ class SaleRecord extends Component
     public $customer_id = '';
     public $quantity = '';
     public $taxes = '';
+
+    public $editingSaleId;
+    
+    public $editingSaleProductId;
+    public $editingSaleCustomerId;
+    public $editingSaleQuantity;
+    public $editingSaleTaxes;
     
     public function updatedSearch (){
         $this->resetPage();
@@ -58,7 +65,7 @@ class SaleRecord extends Component
 
             Sale::create([
                 'product_id' => $validated['product_id'],
-                'customer_id' => $validated['product_id'],
+                'customer_id' => $validated['customer_id'],
                 'user_id' => Auth::user()->id,
                 'quantity' => $validated['quantity'],
                 'taxes' => $validated['taxes'],
@@ -87,6 +94,46 @@ class SaleRecord extends Component
 
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
+    }
+
+    public function edit($saleId){
+        $this->editingSaleId = $saleId;
+        $editingSale = Sale::find($saleId);
+
+        $this->editingSaleProductId = $editingSale->product_id;
+        $this->editingSaleCustomerId = $editingSale->customer_id;
+        $this->editingSaleQuantity = $editingSale->quantity;
+        $this->editingSaleTaxes = $editingSale->taxes;
+
+    }
+
+    public function cancelEdit() {
+        $this->reset(
+            "editingSaleId",
+            "editingSaleProductId",
+            "editingSaleCustomerId",
+            "editingSaleQuantity",
+            "editingSaleTaxes"
+        );
+
+        $this->dispatch('close-modal');
+    }
+
+    public function update() {
+
+        // $prevProduct = Product::find($this->editingSaleProductId);
+
+
+        Sale::find($this->editingSaleId)->update(
+            [
+                'product_id' => $this->editingSaleProductId,
+                'customer_id' => $this->editingSaleCustomerId,
+                'quantity' => $this->editingSaleQuantity,
+                'taxes' => $this->editingSaleTaxes,
+            ]
+        );
+
+        $this->cancelEdit();
     }
 
     public function render()
