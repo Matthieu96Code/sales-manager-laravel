@@ -1,41 +1,14 @@
 <div>
 
-    <x-add-modal name="add-product" title="Add Product">
+    <x-add-modal name="show-product" title="Show Product">
 
         <x-slot:body>
-            <h1 class="main-title">Add a new product</h1>
-            <form wire:submit="create" class="main-form" action="">
-                <div class="main-form-group">
-                    <label class="main-label" for="">product name</label>
-                    <input wire:model="name" class="main-input" type="text" placeholder="product name">
-                </div>
-                
-                <div class="main-form-group">
-                    <label class="main-label" for="">product unit</label>
-                    <input wire:model="unit" class="main-input" type="text" placeholder="product unit">
-                </div>
-                
-                <div class="main-form-group">
-                    <label class="main-label" for="">product quantity</label>
-                    <input wire:model="quantity" class="main-input" type="number" placeholder="product quantity">
-                </div>
-                <div class="main-form-group">
-                    <label class="main-label" for="">price in usd</label>
-                    <input wire:model="price" class="main-input" type="number" placeholder="price">
-                </div>
-                <div class="main-form-group">
-                    <label class="main-label" for="">detail</label>
-                    <textarea wire:model="detail" class="main-input" cols="20" rows="10"></textarea>
-                </div>
-
-                <div class="main-form-group">
-                    <button class="main-btn">Saved</button>
-                </div>
-            </form>
+            <h1 class="main-title">Show product</h1>
+            @if ($editingProductId)
+                <p>{{$editingProductName}}</p>
+            @endif
         </x-slot>
     </x-add-modal>
-
-    {{-- <button class="main-btn add-btn add-product-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-product' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add product</button> --}}
 
     <h1 class="main-title">Store items</h1>
 
@@ -85,11 +58,9 @@
                         <td class="main-td product-td"> {{ $product->created_at }} </td>
                         <td class="main-td product-td"> {{ $product->updated_at }} </td>
                         <td class="main-td product-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $product->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$product->id}})">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-lin-trash />
-                                </span>
-                            </button>
+                            <sapn class="main-icon show-icon"  wire:click="edit({{$product->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-product' })">
+                                <x-iconsax-bro-eye />
+                            </sapn>
                         </td>
                     </tr>
                 @endforeach

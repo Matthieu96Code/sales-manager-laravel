@@ -25,44 +25,32 @@ class StoreItems extends Component
 
     #[Url()]
     public $perPage = 5;
-
-    public $name = '';
-    public $unit = '';
-    public $quantity = '';
-    public $price = '';
-    public $detail = '';
     
+    public $editingProductId;
+    
+    public $editingProductName;
+    public $editingProductUnit;
+    public $editingProductPrice;
+    public $editingProductDetail;
+
+    
+    public function edit($productId){
+        $this->editingProductId = $productId;
+        $editingProduct = Product::find($productId);
+
+        $this->editingProductName = $editingProduct->name;
+        $this->editingProductUnit = $editingProduct->unit;
+        $this->editingProductPrice = $editingProduct->price;
+        $this->editingProductDetail = $editingProduct->detail;
+
+    }
+
     public function updatedSearch (){
         $this->resetPage();
     }
 
     public function updatedPerPage (){
         $this->resetPage();
-    }
-
-    public function create() {
-        $validated = $this->validate([
-            'name' => 'required',
-            'unit' => 'required',
-            'quantity' => 'required',
-            'price' => 'required',
-            'detail' => 'nullable',
-        ]);
-
-        Product::create($validated);
-
-        // $product = Product::create($validated);
-
-        $this->reset('name', 'unit', 'quantity', 'price', 'detail');
-
-        session()->flash('success', 'product created successfully');
-
-        // $this->dispatch('product-created', $product);
-        $this->dispatch('close-modal');
-    }
-
-    public function delete(Product $product){
-        $product->delete();
     }
 
     public function setSortBy($sortByField){
@@ -75,6 +63,8 @@ class StoreItems extends Component
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
     }
+
+
 
     public function render()
     {
