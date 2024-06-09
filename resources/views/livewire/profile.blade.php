@@ -9,6 +9,8 @@
                     <label class="main-label" for="">Secret Key</label>
                     <input wire:model="secretKey" class="main-input" type="text" placeholder="secrete key">
                 </div>
+
+                <p>The secret key is : 0000</p>
                 
                 <div class="main-form-group">
                     <button class="main-btn">send</button>
@@ -26,6 +28,8 @@
                     <label class="main-label" for="">Secret Key</label>
                     <input wire:model="secretKey" class="main-input" type="text" placeholder="secrete key">
                 </div>
+
+                <p>The secret key is : 0000</p>
                 
                 <div class="main-form-group">
                     <button class="main-btn">send</button>
@@ -44,6 +48,8 @@
                     <input wire:model="secretKey" class="main-input" type="text" placeholder="secrete key">
                 </div>
                 
+                <p>The secret key is : 0000</p>
+                
                 <div class="main-form-group">
                     <button class="main-btn">send</button>
                 </div>
@@ -60,6 +66,8 @@
                     <label class="main-label" for="">Secret Key</label>
                     <input wire:model="secretKey" class="main-input" type="text" placeholder="secrete key">
                 </div>
+
+                <p>The secret key is : 0000</p>
                 
                 <div class="main-form-group">
                     <button class="main-btn">send</button>

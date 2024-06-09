@@ -17,10 +17,8 @@ class Supply extends Model
 
     public function scopeSearch($query, $value){
         $query->where('product_id', 'like', "%{$value}%")
-        ->orwhere('customer_id', 'like', "%{$value}%")
         ->orwhere('user_id', 'like', "%{$value}%")
-        ->orwhere('quantity', 'like', "%{$value}%")
-        ->orwhere('taxes', 'like', "%{$value}%");
+        ->orwhere('quantity', 'like', "%{$value}%");
     }
 
     public function user(){

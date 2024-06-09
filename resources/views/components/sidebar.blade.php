@@ -12,7 +12,6 @@
         <li class="menu-list-item">
             <a wire:navigate class="menu-list-link" href="{{ route('dashboard') }}">
                 <span class="main-icon menu-icon">
-                    {{-- <x-iconsax-lin-house /> --}}
                     <x-iconsax-out-graph />
                 </span>
                 <p>Dashboard</p>
@@ -76,14 +75,14 @@
         </li>
         @endif
         
-        <li class="menu-list-item">
+        {{-- <li class="menu-list-item">
             <a wire:navigate class="menu-list-link" href="{{ route('sellers') }}">
                 <span class="main-icon menu-icon">
                     <x-iconsax-bro-timer-1 />
                 </span>
                 <p>History</p>
             </a>
-        </li>
+        </li> --}}
         @endif
         <li class="menu-list-item">
             <a wire:navigate class="menu-list-link" href="{{ route('profile') }}">
@@ -98,6 +97,9 @@
     {{-- <form class="logout-form" action="{{ url('logout') }}" method="post">
         @csrf --}}
         <div class="logout-form">
+            <div wire:loading.delay class="main-form-group">
+                <div class="loader"></div>
+            </div>
             <button wire:click="logout" class="logout-btn" type="button">
                 <span class="main-icon menu-icon">
                     <x-iconsax-two-logout />

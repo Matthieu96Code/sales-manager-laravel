@@ -24,6 +24,7 @@
                 </div>
         
                 <div class="main-form-group">
+                    {{-- <button type="button" class="main-btn cancel-btn">Cancel</button> --}}
                     <button class="main-btn">Saved</button>
                 </div>
             </form>
@@ -68,6 +69,10 @@
         </x-slot>
     </x-add-modal>
 
+    @session('success')
+        <span>{{session("success")}}</span>
+    @endsession
+    
     <button class="main-btn add-btn add-customer-btn" x-data x-on:click="$dispatch('open-modal', {name : 'add-customer' })" class="px-3 py-1 bg-teal-500 text-white rounded">Add customer</button>
 
     <h1 class="main-title">Customers List</h1>

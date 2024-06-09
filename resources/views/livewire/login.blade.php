@@ -8,7 +8,7 @@
             <label class="main-label" for="">username</label>
             <input class="main-input" wire:model="name" type="text" placeholder="username">
             @error('name')
-                <span>{{$message}}</span>
+                <span class="red-text">{{$message}}</span>
             @enderror
         </div>
         
@@ -16,8 +16,12 @@
             <label class="main-label" for="">password</label>
             <input class="main-input" wire:model="password" type="password" placeholder="password">
             @error('password')
-                <span>{{$message}}</span>
+                <span class="red-text">{{$message}}</span>
             @enderror
+        </div>
+
+        <div wire:loading.delay class="main-form-group">
+            <div class="loader"></div>
         </div>
 
         <div class="main-form-group">

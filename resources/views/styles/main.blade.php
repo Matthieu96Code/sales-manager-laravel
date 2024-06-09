@@ -164,7 +164,6 @@
         transition: 1s;
     }
 
-
     /* main buttons */
 
     .main-btn {
@@ -253,6 +252,17 @@
     .close-btn:hover {
         background-color: var(--sections-background-color);
         color: red;
+    }
+
+    .cancel-btn {
+        background-color: var(--)var(--sidebar-menu-text);
+        color: var(--primary-text-color);
+    }
+    
+    .cancel-btn:hover {
+        background-color: red;
+        border: 1px solid red;
+        color: var(--color-text-button)
     }
 
     .main-icon {
@@ -406,7 +416,7 @@
 
     .main-modal {
         position: fixed;
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(50, 57, 72, 0.7);
         inset: 0;
     }
 
@@ -427,7 +437,7 @@
         background-color: var(--table-header-color);
         border-radius: 12px 12px 0 0;
         padding: 0 12px;
-        box-shadow: 1px 1px 3px var(--sidebar-background-color);
+        /* box-shadow: 1px 1px 3px var(--sidebar-background-color); */
     }
     
     .modal-content .modal-body {

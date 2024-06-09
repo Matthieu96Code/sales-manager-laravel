@@ -51,6 +51,49 @@
         color: var(--secondary-text-color);
     }
 
+        
+    @keyframes pop-fade-in {
+    from {transform: scale(0); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+    }
+
+    @keyframes loading {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+    }
+
+    /* Loader */
+
+    .loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(50, 57, 72, 0.7);
+    transition: opacity 0.75s, visibility 0.75s;
+    }
+
+    .loader--hidden {
+    opacity: 0;
+    visibility: hidden;
+    }
+
+    .loader::after {
+    content: '';
+    width: 75px;
+    height: 75px;
+    /* border: 15px solid var(--body-background-color); */
+    border: 15px solid transparent;
+    border-top-color: var(--body-background-color);
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+    }
+
     @media (min-width: 678px) {
 
     }
