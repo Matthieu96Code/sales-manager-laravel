@@ -129,16 +129,20 @@
                                     <x-iconsax-bro-eye />
                                 </span>
                             </sapn>
-                            <sapn class="main-icon edit-icon"  wire:click="edit({{$supply->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-supply' })">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-bro-edit-2 />
+
+                            @if ((Auth::user()->id === $supply->user->id) || (Auth::user()->role > 1))
+                                <sapn class="main-icon edit-icon"  wire:click="edit({{$supply->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-supply' })">
+                                    <span class="main-icon table-icon">
+                                        <x-iconsax-bro-edit-2 />
+                                    </span>
+                                </sapn>
+                                <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $supply->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$supply->id}})">
+                                    <span class="main-icon table-icon">
+                                        <x-iconsax-lin-trash />
+                                    </span>
                                 </span>
-                            </sapn>
-                            <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $supply->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$supply->id}})">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-lin-trash />
-                                </span>
-                            </span>
+                            @endif
+                            
                         </td>
                     </tr>
                 @endforeach
