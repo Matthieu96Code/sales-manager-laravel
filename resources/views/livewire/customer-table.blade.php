@@ -1,3 +1,5 @@
+{{-- Add customer --}}
+
 <div>
     <x-add-modal name="add-customer" title="Add customer">
         <x-slot:body>
@@ -28,6 +30,16 @@
                     <button class="main-btn">Saved</button>
                 </div>
             </form>
+        </x-slot>
+    </x-add-modal>
+
+    {{-- show sale modal --}}
+
+    <x-add-modal name="show-customer" title="Show customer">
+        <x-slot:body>
+            @if ($editingCustomerId)
+                <p>{{$editingCustomerId}}</p>
+            @endif
         </x-slot>
     </x-add-modal>
 
@@ -123,6 +135,11 @@
                         <td class="main-td customer-td"> {{ $customer->location }} </td>
                         <td class="main-td customer-td"> {{ $customer->created_at }} </td>
                         <td class="main-td customer-td">
+                            <sapn class="main-icon show-icon"  wire:click="edit({{$customer->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-customer' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-eye />
+                                </span>
+                            </sapn>
                             <sapn class="main-icon edit-icon"  wire:click="edit({{$customer->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-customer' })">
                                 <span class="main-icon table-icon">
                                     <x-iconsax-bro-edit-2 />
