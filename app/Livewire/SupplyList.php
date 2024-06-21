@@ -69,8 +69,20 @@ class SupplyList extends Component
         $this->dispatch('close-modal');
     }
 
-    public function delete(Supply $sale){
-        $sale->delete();
+    public function delete(Supply $supply){
+
+        $currentProduct = Product::find($supply->product_id);
+        $resetedQuantity = $currentProduct->quantity - $supply->quantity;
+
+        if ($resetedQuantity < 0 ) {
+
+        }
+
+        $currentProduct->update([
+            'quantity' => $resetedQuantity
+        ]);
+
+        $supply->delete();
     }
 
     public function setSortBy($sortByField){
@@ -98,17 +110,30 @@ class SupplyList extends Component
         $this->reset(
             "editingSupplyId",
             "editingSupplyProductId",
-            "editingSupplyquantity",
+            "editingSupplyQuantity",
         );
 
         $this->dispatch('close-modal');
     }
 
     public function update() {
-        Product::find($this->editingSupplyId)->update(
+        
+        $currentSupply = Supply::find($this->editingSupplyId);
+        $currentProduct = Product::find($this->editingSupplyProductId);
+        $resetedQuantity = $currentProduct->quantity - $currentSupply->quantity;
+
+        if ($resetedQuantity < 0 ) {
+
+        }
+
+        $currentProduct->update([
+            'quantity' => ($resetedQuantity + $this->editingSupplyQuantity)
+        ]);
+
+        Supply::find($this->editingSupplyId)->update(
             [
                 'product_id' => $this->editingSupplyProductId,
-                'quantity' => $this->editingSupplyquantity,
+                'quantity' => $this->editingSupplyQuantity,
             ]
         );
 
