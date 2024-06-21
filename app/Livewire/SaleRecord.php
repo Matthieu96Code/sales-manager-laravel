@@ -50,6 +50,7 @@ class SaleRecord extends Component
     }
 
     public function create() {
+        
         $validated = $this->validate([
             'product_id' => 'required',
             'customer_id' => 'required',
@@ -82,6 +83,14 @@ class SaleRecord extends Component
     }
 
     public function delete(Sale $sale){
+
+        $currentProduct = Product::find($sale->product_id);
+        $resetedQuantity = $currentProduct->quantity + $sale->quantity;
+
+        $currentProduct->update([
+            'quantity' => $resetedQuantity
+        ]);
+
         $sale->delete();
     }
 
@@ -121,8 +130,13 @@ class SaleRecord extends Component
 
     public function update() {
 
-        // $prevProduct = Product::find($this->editingSaleProductId);
+        $currentSale = Sale::find($this->editingSaleId);
+        $currentProduct = Product::find($this->editingSaleProductId);
+        $resetedQuantity = $currentProduct->quantity + $currentSale->quantity;
 
+        $currentProduct->update([
+            'quantity' => ($resetedQuantity - $this->editingSaleQuantity)
+        ]);
 
         Sale::find($this->editingSaleId)->update(
             [
