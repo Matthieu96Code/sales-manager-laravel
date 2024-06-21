@@ -84,17 +84,51 @@
             <tbody class="main-tbody user-tbody">
                 @foreach ($users as $user)
                     <tr class="main-tr user-tr" wire:key="{{ $user->id }}">
-                        <th class="main-td user-td"> {{ $user->name }} </th>
-                        <th class="main-td user-td"> {{ $user->role }} </th>
-                        <th class="main-td user-td"> {{ $user->created_at }} </th>
-                        <th class="main-td user-td"> {{ $user->updated_at }} </th>
-                        <th class="main-td user-td">
-                            <button class="main-btn delete-btn" onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$user->id}})">
+                        <td class="main-td user-td"> {{ $user->name }} </td>
+                        <td class="main-td user-td"> 
+                            
+                            @switch($user->role)
+                                @case(0)
+                                    Guest
+                                    @break
+                                @case(1)
+                                    Seller
+                                    @break
+                                @case(2)
+                                    Admin
+                                    @break
+                                @default
+                                    
+                            @endswitch
+
+                        </td>
+                        <td class="main-td user-td"> {{ $user->created_at }} </td>
+                        <td class="main-td user-td"> {{ $user->updated_at }} </td>
+                        <td class="main-td user-td">
+
+                            @if (Auth::user()->role > 1)
+
+                            {{-- <sapn class="main-icon show-icon"  wire:click="edit({{$user->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-user' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-eye />
+                                </span>
+                            </sapn>
+
+                            <sapn class="main-icon edit-icon"  wire:click="edit({{$user->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-user' })">
+                                <span class="main-icon table-icon">
+                                    <x-iconsax-bro-edit-2 />
+                                </span>
+                            </sapn> --}}
+
+                            <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$user->id}})">
                                 <span class="main-icon table-icon">
                                     <x-iconsax-lin-trash />
                                 </span>
-                            </button>
-                        </th>
+                            </span>
+
+                            @endif
+
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
