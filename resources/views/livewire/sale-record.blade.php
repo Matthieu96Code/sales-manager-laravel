@@ -1,3 +1,5 @@
+{{-- Add sale --}}
+
 <div>
 
     <x-add-modal name="add-sale" title="Add transation">
@@ -157,16 +159,20 @@
                                     <x-iconsax-bro-eye />
                                 </span>
                             </sapn>
-                            <sapn class="main-icon edit-icon"  wire:click="edit({{$sale->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-sale' })">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-bro-edit-2 />
+                            @if ((Auth::user()->id === $sale->user->id) || (Auth::user()->role > 1))
+                                
+                                <sapn class="main-icon edit-icon"  wire:click="edit({{$sale->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'edit-sale' })">
+                                    <span class="main-icon table-icon">
+                                        <x-iconsax-bro-edit-2 />
+                                    </span>
+                                </sapn>
+                                <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $sale->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$sale->id}})">
+                                    <span class="main-icon table-icon">
+                                        <x-iconsax-lin-trash />
+                                    </span>
                                 </span>
-                            </sapn>
-                            <span class="main-icon del-icon" onclick="confirm('Are you sure you want to delete {{ $sale->name }} ?') ? '' : event.stopImmediatePropagation() " wire:click="delete({{$sale->id}})">
-                                <span class="main-icon table-icon">
-                                    <x-iconsax-lin-trash />
-                                </span>
-                            </span>
+
+                            @endif
                         </td>
                     </tr>
                 @endforeach
