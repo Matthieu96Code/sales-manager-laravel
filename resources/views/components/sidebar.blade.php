@@ -75,14 +75,14 @@
         </li>
         @endif
         
-        {{-- <li class="menu-list-item">
-            <a wire:navigate class="menu-list-link" href="{{ route('sellers') }}">
+        <li class="menu-list-item">
+            <a wire:navigate class="menu-list-link" href="{{ route('histories') }}">
                 <span class="main-icon menu-icon">
                     <x-iconsax-bro-timer-1 />
                 </span>
                 <p>History</p>
             </a>
-        </li> --}}
+        </li>
         @endif
         <li class="menu-list-item">
             <a wire:navigate class="menu-list-link" href="{{ route('profile') }}">

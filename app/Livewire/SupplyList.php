@@ -17,9 +17,6 @@ class SupplyList extends Component
     #[Url(history:true)]
     public $search = "";
 
-    // #[Url(history:true)]
-    // public $roleSearch = "";
-
     #[Url(history:true)]
     public $sortBy = 'created_at';
 
@@ -144,9 +141,6 @@ class SupplyList extends Component
     {
         return view('livewire.supply-list', [
             'supplies' => Supply::search($this->search)
-            // ->when($this->roleSearch !== '', function($query){
-                // $query->where('role', $this->roleSearch);
-            // })
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage),
             'products' => Product::all()

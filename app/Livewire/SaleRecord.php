@@ -17,9 +17,6 @@ class SaleRecord extends Component
     #[Url(history:true)]
     public $search = "";
 
-    // #[Url(history:true)]
-    // public $roleSearch = "";
-
     #[Url(history:true)]
     public $sortBy = 'created_at';
 
@@ -154,9 +151,6 @@ class SaleRecord extends Component
     {
         return view('livewire.sale-record', [
             'sales' => Sale::search($this->search)
-            // ->when($this->roleSearch !== '', function($query){
-                // $query->where('role', $this->roleSearch);
-            // })
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage),
             'customers' => Customer::all(),

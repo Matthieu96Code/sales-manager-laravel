@@ -152,9 +152,9 @@
         <div>
             <label class="main-label" for="">Per page</label>
             <select class="main-input" wire:model.live="perPage">
-                <option value="2">2</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
             </select>
         </div>
 
