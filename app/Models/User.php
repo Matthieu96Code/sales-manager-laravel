@@ -55,4 +55,12 @@ class User extends Authenticatable
     public function products(){
         return $this->hasMany(Product::class);
     }
+
+    public function supplies(){
+        return $this->hasMany(Supply::class);
+    }
+
+    public function histories(){
+        return $this->hasMany(History::class);
+    }
 }

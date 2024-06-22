@@ -2,6 +2,7 @@
 
 use App\Livewire\CustomerTable;
 use App\Livewire\Dashboard;
+use App\Livewire\HistoryList;
 use App\Livewire\Login;
 use App\Livewire\ProductList;
 use App\Livewire\Profile;
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/sellers', UserTable::class)->name('sellers');
     Route::get('/profile', Profile::class)->name('profile');
     Route::get('/supplies', SupplyList::class)->name('supplies');
+    Route::get('/histories', HistoryList::class)->name('histories');
 });
 // Route::get('/sales', UserTable::class)->name('sales');
 
