@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\History;
 use App\Models\Product;
 use App\Models\Supply;
 use Illuminate\Support\Facades\Auth;
@@ -43,27 +44,42 @@ class SupplyList extends Component
     }
 
     public function create() {
+
+        // Validate supply entry
+
         $validated = $this->validate([
             'product_id' => 'required',
             'quantity' => 'required',
         ]);
 
-        Supply::create([
+        // Create supply
+
+        $supply = Supply::create([
+        // Supply::create([
             'product_id' => $validated['product_id'],
             'user_id' => Auth::user()->id,
             'quantity' => $validated['quantity'],
         ]);
+
+        // Update the concern product
 
         $prevProduct = Product::find($validated['product_id']);
         $prevProduct->update([
             'quantity' => ($prevProduct->quantity +  $validated['quantity'])
         ]);
 
-        // $product = Product::create($validated);
+        // Create history
+
+        $this->createHistory('create supply', $validated['product_id'], $validated['quantity']  );
+
+        // Reset field, show succes message and close modal
+
         $this->reset('product_id', 'quantity');
         session()->flash('success', 'supply created successfully');
         // $this->dispatch('product-created', $product);
         $this->dispatch('close-modal');
+
+
     }
 
     public function delete(Supply $supply){
@@ -135,6 +151,17 @@ class SupplyList extends Component
         );
 
         $this->cancelEdit();
+    }
+
+    private function createHistory($title, $productId, $actionQuantity) {
+
+        History::create([
+            'title' => $title,
+            'user_id' => Auth::user()->id,
+            'product_id' => $productId,
+            'quantity' => $actionQuantity,
+            // 'sale_id',
+        ]);
     }
 
     public function render()
