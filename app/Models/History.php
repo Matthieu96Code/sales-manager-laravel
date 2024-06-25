@@ -10,10 +10,10 @@ class History extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
+        'title',
         'user_id',
-        'sale_id',
-        'supply_id',
+        'product_id',
+        'quantity',
     ];
 
     public function scopeSearch($query, $value){
