@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\History;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -30,6 +31,30 @@ class HistoryList extends Component
 
     public $selectingHistoryId;
     
+    public function create() {
+
+        // Validate history entry
+
+        $validated = $this->validate([
+            'product_id' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        // Create history
+
+        // $history = History::create([
+        History::create([
+            'user_id' => Auth::user()->id,
+            'product_id' => $validated['product_id'],
+            'quantity' => $validated['quantity'],
+        ]);
+
+        // Reset field, show succes message and close modal
+
+        session()->flash('success', 'supply created successfully');
+
+        
+    }
 
 
     public function render()
