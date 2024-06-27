@@ -35,6 +35,9 @@
                     </div>
                 </div>
             </div>
+
+            @include('components.dashboard-chart')
+            
         @endauth
 
         @guest
