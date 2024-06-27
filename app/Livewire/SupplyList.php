@@ -70,7 +70,7 @@ class SupplyList extends Component
 
         // Create history
 
-        $this->createHistory('create supply', $validated['product_id'], $validated['quantity']  );
+        $this->createHistory('Create supply', $validated['product_id'], $validated['quantity']);
 
         // Reset field, show succes message and close modal
 
@@ -96,6 +96,9 @@ class SupplyList extends Component
         ]);
 
         $supply->delete();
+
+        $this->createHistory('Delete supply', $supply['product_id'], $supply['quantity'] * -1);
+
     }
 
     public function setSortBy($sortByField){
@@ -135,7 +138,24 @@ class SupplyList extends Component
         $currentProduct = Product::find($this->editingSupplyProductId);
         $resetedQuantity = $currentProduct->quantity - $currentSupply->quantity;
 
+        // check if the quantity is enought to reduce by updating
+
         if ($resetedQuantity < 0 ) {
+            // error flash
+        }
+
+        $historyQuantity = $this->editingSupplyQuantity - $currentSupply->quantity;
+
+        if (($currentSupply->product_id !== $this->editingSupplyProductId)) {
+            // changing product, with changing or same quantity
+            // $this->createHistory('Update supply', $currentProduct['id'], $historyQuantity);
+            // $this->createHistory('Update supply', $currentProduct['id'], $historyQuantity);
+        }
+
+        if (($currentSupply->quantiy !== $this->editingSupplyQuantity) &&
+            ($currentSupply->product_id === $this->editingSupplyProductId)) {
+            // changing quantity with the same product
+            $this->createHistory('Update supply', $currentProduct['id'], $historyQuantity);
 
         }
 
@@ -149,6 +169,7 @@ class SupplyList extends Component
                 'quantity' => $this->editingSupplyQuantity,
             ]
         );
+
 
         $this->cancelEdit();
     }
