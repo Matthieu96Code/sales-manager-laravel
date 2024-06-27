@@ -24,6 +24,10 @@
             <thead class="main-thead history-thead">
                 <tr class="main-tr history-tr">
                     @include('livewire.includes.table-sortable-th', [
+                        'type' => 'title',
+                        'displayName' => 'Title'
+                    ])
+                    @include('livewire.includes.table-sortable-th', [
                         'type' => 'name',
                         'displayName' => 'Product'
                     ])
@@ -39,24 +43,20 @@
                         'type' => 'created_at',
                         'displayName' => 'Created'
                     ])
-                    @include('livewire.includes.table-sortable-th', [
-                        'type' => 'updated_at',
-                        'displayName' => 'Edited'
-                    ])
-                    <th class="main-th history-th">
+                    {{-- <th class="main-th history-th">
                         <span>Actions</span>
-                    </th>
+                    </th> --}}
                 </tr>
             </thead>
             <tbody class="main-tbody history-tbody">
                 @foreach ($histories as $history)
                     <tr class="main-tr history-tr" wire:key="{{ $history->id }}">
+                        <td class="main-td history-td"> {{ $history->title }} </td>
                         <td class="main-td history-td"> {{ $history->product->name }} </td>
-                        <td class="main-td history-td"> {{ $history->product->quantity }} </td>
+                        <td class="main-td history-td"> {{ $history->quantity }} </td>
                         <td class="main-td history-td"> {{ $history->user->name }} </td>
                         <td class="main-td history-td"> {{ $history->created_at }} </td>
-                        <td class="main-td history-td"> {{ $history->updated_at }} </td>
-                        <td class="main-td history-td">
+                        {{-- <td class="main-td history-td">
                             <sapn class="main-icon show-icon"  wire:click="edit({{$history->id}})" x-data x-on:click="$dispatch('open-modal', {name : 'show-history' })">
                                 <span class="main-icon table-icon">
                                     <x-iconsax-bro-eye />
@@ -76,7 +76,7 @@
                                 </span>
                             @endif
                             
-                        </td>
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>
