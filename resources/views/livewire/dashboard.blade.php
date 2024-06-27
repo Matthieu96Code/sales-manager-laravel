@@ -12,6 +12,11 @@
                 You have full access to the system
             </p>
         </div>
+
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+
     @endif
 
     @if (Auth::user()->role === 0)
