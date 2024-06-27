@@ -10,9 +10,9 @@ class Dashboard extends Component
 
     public function render()
     {
-        if (Auth::user()->role>0) {
-            $this->redirect('/stores',navigate:true);
-        }
+        // if (Auth::user()->role>0) {
+        //     $this->redirect('/stores',navigate:true);
+        // }
 
         return view('livewire.dashboard');
     }
