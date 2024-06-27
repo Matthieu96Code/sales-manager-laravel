@@ -31,29 +31,38 @@ class HistoryList extends Component
 
     public $selectingHistoryId;
     
-    public function create() {
+    // public function create() {
 
-        // Validate history entry
+    //     // Validate history entry
 
-        $validated = $this->validate([
-            'product_id' => 'required',
-            'quantity' => 'required',
-        ]);
+    //     $validated = $this->validate([
+    //         'product_id' => 'required',
+    //         'quantity' => 'required',
+    //     ]);
 
-        // Create history
+    //     // Create history
 
-        // $history = History::create([
+    //     // $history = History::create([
+    //     History::create([
+    //         'user_id' => Auth::user()->id,
+    //         'product_id' => $validated['product_id'],
+    //         'quantity' => $validated['quantity'],
+    //     ]);
+
+    //     // Reset field, show succes message and close modal
+
+    //     session()->flash('success', 'supply created successfully');
+
+    // }
+
+    public function createHistory($title, $productId, $actionQuantity) {
+
         History::create([
+            'title' => $title,
             'user_id' => Auth::user()->id,
-            'product_id' => $validated['product_id'],
-            'quantity' => $validated['quantity'],
+            'product_id' => $productId,
+            'quantity' => $actionQuantity,
         ]);
-
-        // Reset field, show succes message and close modal
-
-        session()->flash('success', 'supply created successfully');
-
-        
     }
 
 
