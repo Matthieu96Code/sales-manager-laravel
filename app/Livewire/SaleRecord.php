@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Customer;
+use App\Models\History;
 use App\Models\Product;
 use App\Models\sale;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,8 @@ class SaleRecord extends Component
 
     public function create() {
         
+        // Validate sale entry
+
         $validated = $this->validate([
             'product_id' => 'required',
             'customer_id' => 'required',
@@ -55,11 +58,15 @@ class SaleRecord extends Component
             'taxes' => 'required',
         ]);
 
+        // Check if the quantity is available
+
         $prevProduct = Product::find($validated['product_id']);
         if(($prevProduct->quantity -  $validated['quantity']) >= 0) {
             $prevProduct->update([
                 'quantity' => ($prevProduct->quantity -  $validated['quantity'])
             ]);
+
+            // Create sale
 
             Sale::create([
                 'product_id' => $validated['product_id'],
@@ -69,7 +76,12 @@ class SaleRecord extends Component
                 'taxes' => $validated['taxes'],
             ]);
 
-            // $product = Product::create($validated);
+            // create history
+
+            $this->createHistory('Create sale', $validated['product_id'], $validated['quantity'] * -1);
+
+            // Reset field, show succes message and close modal
+
             $this->reset('product_id', 'customer_id', 'quantity', 'quantity', 'taxes');
             session()->flash('success', 'sale created successfully');
             // $this->dispatch('product-created', $product);
@@ -89,6 +101,8 @@ class SaleRecord extends Component
         ]);
 
         $sale->delete();
+
+        $this->createHistory('Delete sale', $sale['product_id'], $sale['quantity']);
     }
 
     public function setSortBy($sortByField){
@@ -131,6 +145,8 @@ class SaleRecord extends Component
         $currentProduct = Product::find($this->editingSaleProductId);
         $resetedQuantity = $currentProduct->quantity + $currentSale->quantity;
 
+        $historyQuantity = $currentSale->quantity - $this->editingSaleQuantity;
+
         $currentProduct->update([
             'quantity' => ($resetedQuantity - $this->editingSaleQuantity)
         ]);
@@ -144,7 +160,20 @@ class SaleRecord extends Component
             ]
         );
 
+        $this->createHistory('Update sale', $currentProduct['id'], $historyQuantity);
+
         $this->cancelEdit();
+    }
+
+    private function createHistory($title, $productId, $actionQuantity) {
+
+        History::create([
+            'title' => $title,
+            'user_id' => Auth::user()->id,
+            'product_id' => $productId,
+            'quantity' => $actionQuantity,
+            // 'sale_id',
+        ]);
     }
 
     public function render()
