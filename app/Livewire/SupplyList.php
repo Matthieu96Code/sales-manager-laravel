@@ -148,11 +148,11 @@ class SupplyList extends Component
 
         if (($currentSupply->product_id !== $this->editingSupplyProductId)) {
             // changing product, with changing or same quantity
-            // $this->createHistory('Update supply', $currentProduct['id'], $historyQuantity);
-            // $this->createHistory('Update supply', $currentProduct['id'], $historyQuantity);
+            $this->createHistory('switch from supply', $currentSupply->product_id, $currentSupply['quantity'] * -1) ;
+            $this->createHistory('switch to supply', $this->editingSupplyProductId, $this->editingSupplyQuantity);
         }
 
-        if (($currentSupply->quantiy !== $this->editingSupplyQuantity) &&
+        if (($currentSupply->quantity !== $this->editingSupplyQuantity) &&
             ($currentSupply->product_id === $this->editingSupplyProductId)) {
             // changing quantity with the same product
             $this->createHistory('Update supply', $currentProduct['id'], $historyQuantity);
