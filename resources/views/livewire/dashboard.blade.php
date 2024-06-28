@@ -1,6 +1,6 @@
 <div class="dashboard-section">
 
-    @if (Auth::user()->role === 1)
+    @if (Auth::user()->role > 0)
         <div class="auth-log">
             <p>
                 Welcome to the dashboard
