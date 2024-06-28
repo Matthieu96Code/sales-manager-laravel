@@ -147,6 +147,19 @@ class SaleRecord extends Component
 
         $historyQuantity = $currentSale->quantity - $this->editingSaleQuantity;
 
+        if (($currentSale->product_id !== $this->editingSaleProductId)) {
+            // changing product, with changing or same quantity
+            $this->createHistory('switch from sale', $currentSale->product_id, $currentSale['quantity']) ;
+            $this->createHistory('switch to sale', $this->editingSaleProductId, $this->editingSaleQuantity * -1);
+        }
+
+        if (($currentSale->quantity !== $this->editingSaleQuantity) &&
+            ($currentSale->product_id === $this->editingSaleProductId)) {
+            // changing quantity with the same product
+            $this->createHistory('Update sale', $currentProduct['id'], $historyQuantity);
+
+        }
+
         $currentProduct->update([
             'quantity' => ($resetedQuantity - $this->editingSaleQuantity)
         ]);
@@ -159,8 +172,6 @@ class SaleRecord extends Component
                 'taxes' => $this->editingSaleTaxes,
             ]
         );
-
-        $this->createHistory('Update sale', $currentProduct['id'], $historyQuantity);
 
         $this->cancelEdit();
     }
